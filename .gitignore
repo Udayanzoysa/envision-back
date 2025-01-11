@@ -1,0 +1,58 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+
+# Build output
+/dist/
+/build/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Mac system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+
+# Test coverage
+coverage/
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# Laravel specific
+/vendor/
+.env.local
+.env.testing
+
+# Other files and directories specific to your project
+# Add specific directories or files to be ignored here
