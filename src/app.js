@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://sms-app-portal.vercel.app", "https://sms-gateway-fe.vercel.app"], // Replace with your React app's URLs
+    origin: ["http://localhost:5173", "https://envision-olive.vercel.app'"], // Replace with your React app's URLs
     methods: "GET, POST, PUT, DELETE",
     allowedHeaders: "Content-Type, Authorization",
     credentials: true,
