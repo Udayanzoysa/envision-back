@@ -4,7 +4,7 @@ const User = require("./User");
 const Tags = require("./Tags");
 
 // Define the Post model
-const Post = sequelize.define("post", {
+const Post = sequelize.define("Post", {
   title: { type: DataTypes.STRING, allowNull: false },
   slug: {
     type: DataTypes.STRING,

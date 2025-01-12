@@ -3,7 +3,7 @@ const sequelize = require("../config/db.config");
 const Blog = require("./Post");
 const User = require("./User");
 
-const Comments = sequelize.define("comments", {
+const Comments = sequelize.define("Comments", {
   content: { type: DataTypes.TEXT, allowNull: false },
   status: {
     type: DataTypes.ENUM("approved", "pending", "rejected"),
