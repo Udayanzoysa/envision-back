@@ -1,5 +1,6 @@
 const Post = require("../models/Post");
 const User = require("../models/User");
+const Comments = require("../models/Comments");
 
 exports.createPost = async (req, res) => {
   try {
@@ -148,18 +149,25 @@ exports.getPostByID = async (req, res) => {
 exports.updatePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, content, category, cover_img, slug, tags, teaser } = req.body;
+    const { title, content, category, cover_img, slug, tags, teaser, status } = req.body;
 
+    // Find the post by id and UserId
     const post = await Post.findOne({ where: { id, UserId: req.user.id } });
     if (!post) return res.status(404).json({ message: "Post not found" });
-    post.title = title;
-    post.content = content;
-    post.category = category;
-    post.cover_img = cover_img;
-    post.slug = slug;
-    post.tags = tags;
-    post.teaser = teaser;
-    post.status = "draft";
+
+    // Update only the fields that are provided in the request
+    if (title !== undefined) post.title = title;
+    if (content !== undefined) post.content = content;
+    if (category !== undefined) post.category = category;
+    if (cover_img !== undefined) post.cover_img = cover_img;
+    if (slug !== undefined) post.slug = slug;
+    if (tags !== undefined) post.tags = tags;
+    if (teaser !== undefined) post.teaser = teaser;
+    if (status !== undefined) {
+      post.status = status;
+    } else {
+      post.status = "draft";
+    }
     post.updatedAt = new Date().toISOString();
 
     // Save the updated post
@@ -172,8 +180,9 @@ exports.updatePost = async (req, res) => {
 };
 
 exports.deletePost = async (req, res) => {
+  const { id } = req.params;
+  console.log("hi");
   try {
-    const { id } = req.params;
     const post = await Post.findOne({ where: { id, UserId: req.user.id } });
 
     if (!post) return res.status(404).json({ message: "Post not found" });
@@ -182,5 +191,84 @@ exports.deletePost = async (req, res) => {
     res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting post", error });
+  }
+};
+
+exports.addNewComment = async (req, res) => {
+  try {
+    const { slug, comment } = req.body;
+    const userId = 1;
+
+    if (!comment || !slug) {
+      return res.status(400).json({ message: "Comment and Blog slug are required" });
+    }
+
+    const post = await Post.findOne({ where: { slug } });
+    if (!post) {
+      return res.status(404).json({ message: "Blog post not found" });
+    }
+
+    // Create a new comment
+    const newComment = await Comments.create({
+      content: comment,
+      PostId: post.id,
+      UserId: userId,
+    });
+
+    res.status(201).json({
+      message: "Comment added successfully",
+      comment: newComment,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error adding comment",
+      error: error.message,
+    });
+  }
+};
+exports.getAllComment = async (req, res) => {
+  try {
+    const { slug } = req.body;
+
+    if (!slug) {
+      return res.status(400).json({ message: "Invalid Request" });
+    }
+
+    const post = await Post.findOne({ where: { slug } });
+    if (!post) {
+      return res.status(404).json({ message: "Blog post not found" });
+    }
+
+    const comments = await Comments.findAll({
+      where: { PostId: post.id },
+      include: [
+        {
+          model: User,
+          attributes: ["full_name"],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+
+    if (!comments || comments.length === 0) {
+      return res.status(404).json({ message: "No Comments Found on this Post" });
+    }
+
+    // Format the response
+    const formattedComments = comments.map((comment) => ({
+      id: comment.id,
+      content: comment.content,
+      author: { name: "Guest User" },
+      createdAt: comment.createdAt,
+    }));
+
+    res.status(200).json({
+      comments: formattedComments,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching comments",
+      error: error.message,
+    });
   }
 };

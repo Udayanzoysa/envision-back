@@ -6,7 +6,14 @@ const Tags = require("./Tags");
 // Define the Post model
 const Post = sequelize.define("Post", {
   title: { type: DataTypes.STRING, allowNull: false },
-  slug: { type: DataTypes.STRING, allowNull: false },
+  slug: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    set(value) {
+      const formattedValue = value.trim().replace(/\s+/g, "-").toLowerCase();
+      this.setDataValue("slug", formattedValue);
+    },
+  },
   content: { type: DataTypes.TEXT, allowNull: false },
   teaser: { type: DataTypes.TEXT, allowNull: false },
   cover_img: { type: DataTypes.STRING, allowNull: true },

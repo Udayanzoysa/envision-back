@@ -8,3 +8,8 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 });
 
 module.exports = sequelize;
+
+sequelize
+  .sync({ force: false })
+  .then(() => console.log("Database & tables created!"))
+  .catch((err) => console.error("Error syncing database:", err));

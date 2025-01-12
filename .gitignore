@@ -56,3 +56,4 @@ docker-compose.override.yml
 
 # Other files and directories specific to your project
 # Add specific directories or files to be ignored here
+.vercel
