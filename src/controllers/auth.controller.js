@@ -51,16 +51,16 @@ exports.login = async (req, res) => {
     const refreshToken = generateRefreshToken(user.id);
 
     res.cookie("accessToken", accessToken, {
-      httpOnly: false,
-      secure: false,
-      sameSite: "Lax",
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
       path: "/",
     });
 
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: false,
-      secure: false,
-      sameSite: "Lax",
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
       path: "/",
     });
     res.status(200).json({ message: "Login successful" });
