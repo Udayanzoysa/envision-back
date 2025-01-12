@@ -1,19 +1,66 @@
-# Node.js Project Setup Guide
+# Node.js MySQL JWT Project Setup
 
-This README provides the steps to set up and run the Node.js project locally. It also includes MySQL database configuration and JWT setup.
+A basic Node.js project setup with MySQL database and JWT authentication.
 
 ## Prerequisites
 
-Make sure you have the following installed on your system:
+- Node.js
+- MySQL
+- npm (Node Package Manager)
 
-- [Node.js](https://nodejs.org/) (v14 or higher)
-- [MySQL](https://www.mysql.com/)
-- [npm](https://www.npmjs.com/) (Node.js package manager)
+## Quick Start
 
-## Step 1: Clone the Repository
-
-Clone the repository to your local machine using the following command:
-
+1. **Clone the Project**
 ```bash
-git clone https://github.com/your-username/your-repository-name.git
-cd your-repository-name
+git clone https://github.com/Udayanzoysa/envision-back.git 
+cd envision-back
+```
+
+2. **Install Dependencies**
+```bash
+npm install
+npm install nodemon --save-dev
+```
+
+3. **Environment Setup**
+Create a `.env` file in the root directory:
+```env
+# MySQL database Config
+PORT=5000
+DB_HOST=localhost
+DB_USER=<your_username>
+DB_PASSWORD=<your_password>
+DB_NAME=envision_blog
+
+# JWT
+JWT_SECRET=blog@envision
+NODE_ENV=dev
+```
+
+4. **Database Setup**
+```sql
+CREATE DATABASE envision_blog;
+```
+
+5. **Start the Server**
+```bash
+# Development mode
+npm run dev
+
+# Production mode
+npm start
+```
+
+## Basic API Routes
+
+- `POST /api/auth/login` - Register new user
+- `POST /api/auth/register` - User login
+- `GET /api/blog/post/all` - Get blog post
+- `GET /api/blog/post/:slug` - Get blog by slug (Protected)
+
+## JWT Usage
+
+Include token in API requests:
+```
+Authorization: Bearer <your_jwt_token>
+```
