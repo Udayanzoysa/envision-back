@@ -39,6 +39,7 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  const isProduction = process.env.NODE_ENV === "production";
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ where: { email } });
@@ -50,17 +51,19 @@ exports.login = async (req, res) => {
     const accessToken = generateAccessToken(user.id);
     const refreshToken = generateRefreshToken(user.id);
 
+    console.log(isProduction);
+
     res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: false,
+      httpOnly: isProduction,
+      secure: isProduction,
       sameSite: "Lax",
       path: "/",
     });
 
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "Lax",
+      httpOnly: isProduction,
+      secure: isProduction,
+      sameSite: isProduction ? "Lax" : "None",
       path: "/",
     });
     res.status(200).json({ message: "Login successful" });
