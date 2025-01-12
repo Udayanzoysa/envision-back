@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db.config");
 
-const Tags = sequelize.define("Tags", {
+const Tags = sequelize.define("tags", {
   title: { type: DataTypes.STRING, allowNull: false, unique: true },
   desc: { type: DataTypes.STRING, allowNull: true },
   status: {
