@@ -51,7 +51,11 @@ exports.login = async (req, res) => {
     const accessToken = generateAccessToken(user.id);
     const refreshToken = generateRefreshToken(user.id);
 
-    console.log(isProduction);
+    // Save tokens to localStorage
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+    }
 
     res.cookie("accessToken", accessToken, {
       httpOnly: isProduction,
