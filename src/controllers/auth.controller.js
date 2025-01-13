@@ -58,14 +58,14 @@ exports.login = async (req, res) => {
     }
 
     res.cookie("accessToken", accessToken, {
-      httpOnly: false,
+      httpOnly: true,
       secure: false,
       sameSite: "Lax",
       path: "/",
     });
 
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: false,
+      httpOnly: true,
       secure: false,
       sameSite: "Lax",
       path: "/",
