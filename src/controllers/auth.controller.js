@@ -58,16 +58,16 @@ exports.login = async (req, res) => {
     }
 
     res.cookie("accessToken", accessToken, {
-      httpOnly: isProduction,
-      secure: isProduction,
+      httpOnly: false,
+      secure: false,
       sameSite: "Lax",
       path: "/",
     });
 
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: isProduction,
-      secure: isProduction,
-      sameSite: isProduction ? "Lax" : "None",
+      httpOnly: false,
+      secure: false,
+      sameSite: "Lax",
       path: "/",
     });
     res.status(200).json({ message: "Login successful" });
