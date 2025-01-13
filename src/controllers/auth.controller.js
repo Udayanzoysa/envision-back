@@ -60,14 +60,14 @@ exports.login = async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "Lax",
+      sameSite: "None",
       path: "/",
     });
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "Lax",
+      sameSite: "None",
       path: "/",
     });
     res.status(200).json({ message: "Login successful" });
