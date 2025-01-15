@@ -64,3 +64,15 @@ Include token in API requests:
 ```
 Authorization: Bearer <your_jwt_token>
 ```
+## Demo User Logins 
+
+Just create account using registration
+```
+https://envision-olive.vercel.app/login
+```
+
+Use Need an account? Sign Up Button
+Just Provide email and password and create account 
+after creating an account you will appear login form and use logging
+using your credentials 
+That't it 
